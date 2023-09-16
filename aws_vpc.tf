@@ -55,7 +55,7 @@ resource "aws_route_table" "ecomm-pub-rt" {
   }
 }
 
-#Public route table association
+# Public route table association
 resource "aws_route_table_association" "ecomm-pub-asc" {
   subnet_id      = aws_subnet.ecomm-pub-sn.id
   route_table_id = aws_route_table.ecomm-pub-rt.id
@@ -68,4 +68,10 @@ resource "aws_route_table" "ecomm-pvt-rt" {
   tags = {
     Name = "ecomm-private-route-table"
   }
+}
+
+# Private route table association
+resource "aws_route_table_association" "ecomm-pvt-asc" {
+  subnet_id      = aws_subnet.ecomm-pvt-sn.id
+  route_table_id = aws_route_table.ecomm-pvt-rt.id
 }
