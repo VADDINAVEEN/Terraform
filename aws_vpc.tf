@@ -131,3 +131,36 @@ subnet_ids = [aws_subnet.ecomm-pvt-sn.id]
     Name = "ecomm-pvt-nacl"
   }
 }
+
+# Public Security Group
+resource "aws_security_group" "ecomm-pub-sg" {
+  name        = "ecomm-web"
+  description = "Allow SSH & HTTP inbound traffic"
+  vpc_id      = aws_vpc.ecomm.id
+
+  ingress {
+    description      = "SSH from www"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  ingress {
+    description      = "HTTP from www"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ecomm-pub-firewall"
+  }
+}
